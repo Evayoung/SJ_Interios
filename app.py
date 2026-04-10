@@ -26,7 +26,8 @@ add_bootstrap(
 
 setup_sj_interiors_defaults()
 
-# On Vercel, static files are served from /public. Keep local asset mounting for local runs.
+# On Vercel, vercel.json ships the local assets/ directory as static files.
+# Keep local asset mounting for local runs.
 if not os.getenv("VERCEL"):
     mount_assets(app, str(Path(__file__).parent / "assets"), url_path="/assets")
 
