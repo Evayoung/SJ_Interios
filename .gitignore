@@ -7,3 +7,5 @@ pytest-cache-files-*
 *.pyd
 Thumbs.db
 .DS_Store
+
+.vercel
