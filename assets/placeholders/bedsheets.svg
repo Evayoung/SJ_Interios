@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title">
+  <title id="title">Bedsheet display placeholder</title>
+  <rect width="1200" height="900" fill="#f8f3ff"/>
+  <rect x="120" y="510" width="960" height="170" rx="28" fill="#6e45c9"/>
+  <rect x="180" y="305" width="840" height="250" rx="42" fill="#ffffff"/>
+  <rect x="220" y="350" width="760" height="130" rx="34" fill="#efe7fb"/>
+  <rect x="260" y="245" width="170" height="105" rx="24" fill="#ffffff"/>
+  <rect x="450" y="245" width="170" height="105" rx="24" fill="#f3e2ab"/>
+  <rect x="640" y="245" width="170" height="105" rx="24" fill="#ffffff"/>
+  <rect x="830" y="245" width="130" height="105" rx="24" fill="#f3e2ab"/>
+  <text x="120" y="140" fill="#2a1d45" font-size="50" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Bedsheets</text>
+</svg>

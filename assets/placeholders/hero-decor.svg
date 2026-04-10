@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+  <title id="title">MMERCYJ interior decor</title>
+  <desc id="desc">A decor-focused illustration with mirrors, vases, and shelf styling.</desc>
+  <rect width="1600" height="960" fill="#f5f0fc"/>
+  <rect x="170" y="650" width="1260" height="52" rx="24" fill="#6e45c9"/>
+  <rect x="260" y="300" width="1080" height="320" rx="26" fill="#ffffff"/>
+  <circle cx="510" cy="420" r="118" fill="#d8bc73"/>
+  <circle cx="510" cy="420" r="86" fill="#fff7df"/>
+  <rect x="760" y="330" width="130" height="250" rx="24" fill="#efe7fb"/>
+  <rect x="930" y="360" width="110" height="220" rx="20" fill="#f4e9c2"/>
+  <rect x="1080" y="395" width="95" height="185" rx="18" fill="#6e45c9"/>
+  <rect x="300" y="565" width="940" height="26" rx="13" fill="#cab8ec"/>
+  <text x="180" y="175" fill="#2a1d45" font-size="58" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Interior Decor Accessories</text>
+  <text x="180" y="235" fill="#6f6780" font-size="28" font-family="Trebuchet MS, Segoe UI, sans-serif">Mirrors, trays, and statement pieces for a finished home</text>
+</svg>

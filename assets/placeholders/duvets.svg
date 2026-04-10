@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title">
+  <title id="title">Duvet display placeholder</title>
+  <rect width="1200" height="900" fill="#f7f2fd"/>
+  <rect x="140" y="450" width="920" height="220" rx="54" fill="#ffffff"/>
+  <path d="M170 500c140-80 300-110 460-110s300 30 430 110v130H170z" fill="#d8bc73" opacity=".75"/>
+  <path d="M170 540c140-80 300-95 460-95s300 15 430 95v130H170z" fill="#efe7fb"/>
+  <rect x="250" y="325" width="220" height="135" rx="30" fill="#ffffff"/>
+  <rect x="490" y="325" width="220" height="135" rx="30" fill="#f3e2ab"/>
+  <rect x="730" y="325" width="220" height="135" rx="30" fill="#ffffff"/>
+  <text x="140" y="150" fill="#2a1d45" font-size="50" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Duvets</text>
+</svg>

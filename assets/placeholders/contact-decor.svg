@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" role="img" aria-labelledby="title">
+  <title id="title">MMERCYJ decor shelf placeholder</title>
+  <rect width="1400" height="1000" fill="#f7f3fd"/>
+  <rect x="180" y="690" width="1040" height="36" rx="18" fill="#6e45c9"/>
+  <rect x="250" y="360" width="910" height="290" rx="28" fill="#ffffff"/>
+  <circle cx="470" cy="505" r="118" fill="#d8bc73"/>
+  <circle cx="470" cy="505" r="84" fill="#fff7de"/>
+  <rect x="760" y="390" width="120" height="255" rx="24" fill="#efe7fb"/>
+  <rect x="930" y="430" width="105" height="215" rx="20" fill="#ffffff"/>
+  <rect x="1080" y="460" width="82" height="185" rx="18" fill="#d8bc73"/>
+  <text x="170" y="155" fill="#2a1d45" font-size="56" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Contact MMERCYJ</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+  <title id="title">MMERCYJ bedroom collection</title>
+  <desc id="desc">A soft purple bedroom illustration with layered bedding and gold accents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f6f1ff"/>
+      <stop offset="100%" stop-color="#d9c4f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="960" fill="url(#bg)"/>
+  <circle cx="1240" cy="170" r="140" fill="#f3e2ab" opacity=".75"/>
+  <rect x="130" y="570" width="1340" height="170" rx="28" fill="#6e45c9"/>
+  <rect x="220" y="420" width="1160" height="220" rx="46" fill="#fff"/>
+  <rect x="245" y="445" width="1110" height="120" rx="36" fill="#efe7fb"/>
+  <rect x="310" y="352" width="205" height="120" rx="28" fill="#f7f3fb"/>
+  <rect x="540" y="352" width="205" height="120" rx="28" fill="#ffffff"/>
+  <rect x="770" y="352" width="205" height="120" rx="28" fill="#f3e2ab"/>
+  <rect x="1000" y="352" width="205" height="120" rx="28" fill="#ffffff"/>
+  <path d="M220 560c210-88 460-88 740 0 160 48 273 48 420 0v94H220z" fill="#d8bc73" opacity=".7"/>
+  <text x="130" y="165" fill="#2a1d45" font-size="58" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Bedding Collection</text>
+  <text x="130" y="225" fill="#6f6780" font-size="28" font-family="Trebuchet MS, Segoe UI, sans-serif">Soft sheets, layered duvets, and cozy finishing touches</text>
+</svg>

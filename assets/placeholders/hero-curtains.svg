@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+  <title id="title">MMERCYJ curtain styling</title>
+  <desc id="desc">A living space illustration with elegant curtains and warm interior decor.</desc>
+  <rect width="1600" height="960" fill="#f7f2fd"/>
+  <rect x="540" y="110" width="520" height="480" rx="30" fill="#ffffff"/>
+  <rect x="585" y="155" width="430" height="390" rx="24" fill="#ebe7f2"/>
+  <path d="M445 95h170v570H445c-46-120-58-260-58-344s12-160 58-226z" fill="#6e45c9"/>
+  <path d="M985 95h170c46 66 58 142 58 226s-12 224-58 344H985z" fill="#6e45c9"/>
+  <path d="M430 95h60v570h-60z" fill="#5838a7"/>
+  <path d="M1110 95h60v570h-60z" fill="#5838a7"/>
+  <rect x="220" y="640" width="1160" height="200" rx="38" fill="#ffffff"/>
+  <rect x="280" y="690" width="340" height="90" rx="30" fill="#d8bc73"/>
+  <rect x="820" y="670" width="330" height="120" rx="22" fill="#efe7fb"/>
+  <circle cx="1190" cy="725" r="38" fill="#6e45c9"/>
+  <text x="180" y="175" fill="#2a1d45" font-size="58" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700">Curtains & Window Styling</text>
+  <text x="180" y="235" fill="#6f6780" font-size="28" font-family="Trebuchet MS, Segoe UI, sans-serif">Elegant drapes and refined finishes for bright, polished rooms</text>
+</svg>
