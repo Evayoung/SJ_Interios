@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 
 BUSINESS_NAME = "SJ Interiors"
@@ -12,11 +13,14 @@ SHORT_INTRO = (
     "essentials that make homes feel calm, stylish, and beautifully put together."
 )
 
-WHATSAPP_NUMBER = "2348026022672"
-PHONE_NUMBER = "+234 (911) 507-6282"
-PHONE_NUMBERS = ["08026022672", "09115076282"]
-ADDRESS = "Limca Junction Shopping Complex, Along Asa Dam Road, Ilorin, Kwara State"
-LOCATION_SHORT = "Ilorin, Kwara State"
+WHATSAPP_NUMBER = os.getenv("WHATSAPP_NUMBER", "2348026022672")
+PHONE_NUMBER = os.getenv("PHONE_NUMBER", "+234 (911) 507-6282")
+PHONE_NUMBERS = os.getenv("PHONE_NUMBERS", "08026022672,09115076282").split(",")
+ADDRESS = os.getenv(
+    "ADDRESS",
+    "Limca Junction Shopping Complex, Along Asa Dam Road, Ilorin, Kwara State",
+)
+LOCATION_SHORT = os.getenv("LOCATION_SHORT", "Ilorin, Kwara State")
 
 
 @dataclass(frozen=True)

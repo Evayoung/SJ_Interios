@@ -10,6 +10,7 @@ from starlette.responses import JSONResponse
 from faststrap import Badge, Button, Card, Col, Container, Icon, Row
 
 try:
+    from . import content
     from .components import (
         featured_categories_section,
         hero_section,
@@ -23,20 +24,18 @@ try:
         whatsapp_url,
         wholesale_cta_section,
     )
-    from .content import (
-        ADDRESS,
-        BUSINESS_NAME,
-        PHONE_NUMBERS,
-        PHONE_NUMBER,
-        PRODUCTS,
-        SHORT_INTRO,
-        SOCIALS,
-        VALUE_POINTS,
-        WHOLESALE_BENEFITS,
-        category_label,
-        products_for_category,
+    from .content import ADDRESS, BUSINESS_NAME, PHONE_NUMBERS, PHONE_NUMBER
+    from .services import (
+        get_brand_config,
+        get_categories,
+        get_category_label,
+        get_category_slugs,
+        get_featured_products,
+        get_products,
+        get_services,
     )
-except ImportError:
+except Exception:
+    import content
     from components import (
         featured_categories_section,
         hero_section,
@@ -50,38 +49,38 @@ except ImportError:
         whatsapp_url,
         wholesale_cta_section,
     )
-    from content import (
-        ADDRESS,
-        BUSINESS_NAME,
-        PHONE_NUMBERS,
-        PHONE_NUMBER,
-        PRODUCTS,
-        SHORT_INTRO,
-        SOCIALS,
-        VALUE_POINTS,
-        WHOLESALE_BENEFITS,
-        category_label,
-        products_for_category,
+    from content import ADDRESS, BUSINESS_NAME, PHONE_NUMBERS, PHONE_NUMBER
+    from services import (
+        get_brand_config,
+        get_categories,
+        get_category_label,
+        get_category_slugs,
+        get_featured_products,
+        get_products,
+        get_services,
     )
 
 
 def home_page() -> tuple[Any, ...]:
     """Landing page content."""
+    brand = get_brand_config()
+    hero_slides = brand.get("hero_slides", [])
+    featured_products = get_featured_products()
     return (
-        hero_section(),
-        featured_categories_section(),
-        home_preview_section(PRODUCTS),
+        hero_section(brand=brand, hero_slides=hero_slides),
+        featured_categories_section(get_categories()),
+        home_preview_section(featured_products),
         lookbook_section(),
-        wholesale_cta_section(),
+        wholesale_cta_section(brand=brand),
     )
 
 
 def shop_page(category: str) -> tuple[Any, ...]:
     """Shop page content with category filtering."""
-    all_categories = {product.category for product in PRODUCTS}
-    active_category = category if category and category in all_categories else "all"
-    filtered_products = products_for_category(active_category)
-    category_name = "All Collections" if active_category == "all" else category_label(active_category)
+    categories = get_categories()
+    active_category = category if category and category in get_category_slugs() else "all"
+    filtered_products = get_products(active_category)
+    category_name = "All Collections" if active_category == "all" else get_category_label(active_category, categories)
     return (
         page_intro_banner(
             "Shop",
@@ -118,7 +117,7 @@ def shop_page(category: str) -> tuple[Any, ...]:
                     ),
                     cls="align-items-center g-4", cols=1, cols_md=2,
                 ),
-                Div(shop_filter_bar(active_category), cls="mt-4"),
+                Div(shop_filter_bar(active_category, categories), cls="mt-4"),
                 Div(product_grid(filtered_products), cls="mt-4"),
             ),
             cls="content-section",
@@ -129,6 +128,7 @@ def shop_page(category: str) -> tuple[Any, ...]:
 
 def about_page() -> tuple[Any, ...]:
     """About page content."""
+    brand = get_brand_config()
     story_cards = [
         Card(
             H3(title, cls="value-title"),
@@ -136,13 +136,13 @@ def about_page() -> tuple[Any, ...]:
             cls="value-card border-0 h-100",
             body_cls="p-4",
         )
-        for title, copy in VALUE_POINTS
+        for title, copy in brand.get("value_points", content.VALUE_POINTS)
     ]
     return (
         page_intro_banner(
             "About SJ Interiors",
             "Redefining your space through simplicity, comfort, and style.",
-            SHORT_INTRO,
+            brand.get("tagline", content.TAGLINE),
         ),
         Div(
             Container(
@@ -155,12 +155,17 @@ def about_page() -> tuple[Any, ...]:
                                 cls="section-title text-start",
                             ),
                             P(
-                                "SJ Interiors brings together curtains, window blinds, bedsheets, duvets, pillows, "
-                                "throw pillows, and accessories that help every room feel softer, cleaner, and more refined.",
+                                brand.get(
+                                    "about_copy",
+                                    "SJ Interiors brings together curtains, window blinds, bedsheets, duvets, pillows, throw pillows, and accessories that help every room feel softer, cleaner, and more refined.",
+                                ),
                                 cls="section-copy text-start mx-0",
                             ),
                             P(
-                                "Whether you are refreshing a single room or sourcing for a larger project, the focus stays on practical comfort, stylish presentation, and dependable service.",
+                                brand.get(
+                                    "about_support",
+                                    "Whether you are refreshing a single room or sourcing for a larger project, the focus stays on practical comfort, stylish presentation, and dependable service.",
+                                ),
                                 cls="section-copy text-start mx-0",
                             ),
                             cls="story-card border-0",
@@ -210,7 +215,7 @@ def about_page() -> tuple[Any, ...]:
                                     Span(item),
                                     cls="cta-list-item",
                                 )
-                                for item in WHOLESALE_BENEFITS
+                                for item in brand.get("wholesale_benefits", content.WHOLESALE_BENEFITS)
                             ],
                             cls="value-card border-0 h-100",
                             body_cls="p-4 p-lg-5",
@@ -230,6 +235,7 @@ def about_page() -> tuple[Any, ...]:
 
 def contact_page() -> tuple[Any, ...]:
     """Contact page content."""
+    brand = get_brand_config()
     social_cards = [
         Card(
             Div(
@@ -251,7 +257,7 @@ def contact_page() -> tuple[Any, ...]:
             cls="value-card border-0 h-100",
             body_cls="p-4",
         )
-        for item in SOCIALS
+        for item in brand.get("socials", content.SOCIALS)
     ]
     return (
         page_intro_banner(

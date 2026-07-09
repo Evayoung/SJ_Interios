@@ -50,6 +50,18 @@ def whatsapp_url(message: str) -> str:
     return f"https://wa.me/{WHATSAPP_NUMBER}?text={quote(message)}"
 
 
+def _value(item: Any, key: str, fallback: Any = None) -> Any:
+    if isinstance(item, dict):
+        return item.get(key, fallback)
+    return getattr(item, key, fallback)
+
+
+def _product_value(product: Any, key: str, fallback: Any = None) -> Any:
+    if isinstance(product, dict):
+        return product.get(key, fallback)
+    return getattr(product, key, fallback)
+
+
 def section_intro(eyebrow: str, title: str, copy: str, align: str = "start") -> Div:
     """Shared intro block for major sections."""
     text_cls = "text-center" if align == "center" else "text-start"
@@ -179,19 +191,25 @@ def floating_whatsapp_button() -> A:
     )
 
 
-def hero_section() -> Div:
+def hero_section(brand: dict[str, Any] | None = None, hero_slides: list[Any] | None = None) -> Div:
     """Home page hero with auto-scrolling carousel background."""
+    brand = brand or {}
+    hero_slides = hero_slides if hero_slides is not None else [
+        {"image": slide.image, "alt": slide.alt} for slide in HERO_SLIDES
+    ]
+    business_name = brand.get("business_name", BUSINESS_NAME)
+    tagline = brand.get("tagline", TAGLINE)
     slides = [
         CarouselItem(
             Img(
-                src=slide.image,
-                alt=slide.alt,
+                src=slide.get("image"),
+                alt=slide.get("alt", ""),
                 cls="d-block w-100 hero-slide-image",
                 loading="eager" if index == 0 else "lazy",
             ),
             active=index == 0,
         )
-        for index, slide in enumerate(HERO_SLIDES)
+        for index, slide in enumerate(hero_slides)
     ]
     highlight_card = Card(
         Badge("Wholesale + Retail", cls="hero-side-badge mb-3"),
@@ -291,9 +309,10 @@ def category_card(category: Any) -> Card:
     )
 
 
-def featured_categories_section() -> Div:
+def featured_categories_section(categories: list[Any] | None = None) -> Div:
     """Home page category highlights."""
-    featured = CATEGORIES[:5]
+    categories = categories if categories is not None else CATEGORIES
+    featured = categories[:5]
     return Div(
         Container(
             section_intro(
@@ -315,17 +334,23 @@ def featured_categories_section() -> Div:
 
 def product_card(product: Any) -> Card:
     """Product card for the shop grid."""
+    name = _product_value(product, "name", "Product")
+    price = _product_value(product, "price", "")
+    highlight = _product_value(product, "highlight", "")
+    description = _product_value(product, "description", "")
+    image = _product_value(product, "image_url", _product_value(product, "image", ""))
+    category_slug = _product_value(product, "category_slug", _product_value(product, "category", ""))
     message = (
-        f"Hello SJ Interiors, I want to order the {product.name} "
-        f"({category_label(product.category)}) priced at {product.price}."
+        f"Hello SJ Interiors, I want to order the {name} "
+        f"({category_label(category_slug)}) priced at {price}."
     )
     return Card(
-        Badge(product.highlight, variant="light", cls="product-badge"),
-        H3(product.name, cls="product-title"),
-        P(category_label(product.category), cls="product-category"),
-        P(product.description, cls="product-copy"),
+        Badge(highlight, variant="light", cls="product-badge"),
+        H3(name, cls="product-title"),
+        P(category_label(category_slug), cls="product-category"),
+        P(description, cls="product-copy"),
         Div(
-            Span(product.price, cls="product-price"),
+            Span(price, cls="product-price"),
             Button(
                 "Order on WhatsApp",
                 href=whatsapp_url(message),
@@ -336,7 +361,7 @@ def product_card(product: Any) -> Card:
             ),
             cls="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-auto",
         ),
-        img_top=product.image,
+        img_top=image,
         cls="product-card border-0 h-100",
         body_cls="p-4 d-flex flex-column gap-2",
     )
@@ -353,10 +378,11 @@ def product_grid(products: list[Any]) -> Div:
     )
 
 
-def shop_filter_bar(active_category: str) -> Div:
+def shop_filter_bar(active_category: str, categories: list[Any] | None = None) -> Div:
     """Link-based category filter pills."""
+    categories = categories if categories is not None else CATEGORIES
     filter_items = [("all", "All")]
-    filter_items.extend((category.slug, category.label) for category in CATEGORIES)
+    filter_items.extend(( _value(category, "slug"), _value(category, "label") ) for category in categories)
     return Div(
         *[
             A(
@@ -453,8 +479,10 @@ def lookbook_section() -> Div:
     )
 
 
-def wholesale_cta_section() -> Div:
+def wholesale_cta_section(brand: dict[str, Any] | None = None) -> Div:
     """Wholesale and retail CTA strip."""
+    brand = brand or {}
+    wholesale_benefits = brand.get("wholesale_benefits", WHOLESALE_BENEFITS)
     return Div(
         Container(
             Row(

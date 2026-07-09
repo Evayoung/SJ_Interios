@@ -14,7 +14,10 @@ except ImportError:
     from routes import setup_site_routes
     from theme import SJ_INTERIORS_THEME, setup_sj_interiors_defaults
 
-app = FastHTML(secret_key="sj-interiors-secret", session_cookie="sj_interiors_session")
+app = FastHTML(
+    secret_key=os.getenv("SECRET_KEY", "sj-interiors-secret"),
+    session_cookie="sj_interiors_session",
+)
 
 add_bootstrap(
     app,
