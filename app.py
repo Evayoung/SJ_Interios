@@ -31,11 +31,16 @@ setup_sj_interiors_defaults()
 
 # On Vercel, vercel.json ships the local assets/ directory as static files.
 # Keep local asset mounting for local runs.
-if not os.getenv("VERCEL"):
-    mount_assets(app, str(Path(__file__).parent / "assets"), url_path="/assets")
+Environment=os.getenv('VERCEL')
+try:
+    if not Environment or Environment == "False":
+        BASE_DIR = Path(__file__).resolve().parent
+        mount_assets(app, str(BASE_DIR / "assets"), url_path="/assets")
+except Exception as e:
+    print(f"Error mounting local assets: {e}")
 
 app.hdrs = app.hdrs + [
-    Link(rel="stylesheet", href="/assets/custom.css?v=20260319"),
+    Link(rel="stylesheet", href="/assets/custom.css?v=20260724"),
 ]
 
 setup_site_routes(app)

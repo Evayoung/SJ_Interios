@@ -232,6 +232,114 @@ WHOLESALE_BENEFITS = [
     "Quick response on WhatsApp for enquiries, pricing, and order confirmation.",
 ]
 
+@dataclass(frozen=True)
+class ServiceCategory:
+    id: str
+    number: int
+    title: str
+    summary: str
+    icon: str
+    image: str
+    items: list[dict[str, str]]
+
+
+SERVICE_CATEGORIES = [
+    ServiceCategory(
+        id="sitting_curtains",
+        number=1,
+        title="Sitting Room Curtains & Window Dressing",
+        summary="Custom drapery tailored for high aesthetic appeal, light control, and room elegance.",
+        icon="layout-sidebar-inset",
+        image="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "Luxury Curtain Fabric Dressing", "desc": "Custom yardage tailored to room height"},
+            {"name": "Curtain Pleating Tape & Header Styling", "desc": "Precision French, pinch or box pleating"},
+            {"name": "Inner Sheer Lining Fabric", "desc": "Daylight-filtering soft sheer drapes"},
+            {"name": "Heavy Duty Bronze / Metal Rods", "desc": "Sturdy double/single curtain poles"},
+            {"name": "Finials, Brackets & Wall Hardware", "desc": "Reinforced architectural wall mounts"},
+            {"name": "Decorative Tie Backs & Holdbacks", "desc": "Matching holdback tassels or metal hooks"},
+            {"name": "Custom Tailoring & Finishing Workmanship", "desc": "Master artisan stitching & hems"},
+        ],
+    ),
+    ServiceCategory(
+        id="bedroom_curtains",
+        number=2,
+        title="Bedroom Curtains & Light Control",
+        summary="Pleated blackout drapes and sheer linings designed for restful sleep and privacy.",
+        icon="moon",
+        image="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "Bedroom Curtain Fabrics", "desc": "Blackout, dim-out and velvet drapery"},
+            {"name": "Eyelet / Pole Rings & Pleat Tape", "desc": "Smooth gliding hardware fittings"},
+            {"name": "Inner Lining Sheers", "desc": "Privacy sheers for soft daylight illumination"},
+            {"name": "Bedroom Curtain Rods & Poles", "desc": "Matte black or bronze pole sets"},
+            {"name": "Curtain Tie Backs", "desc": "Fabric holdbacks matching bedding tones"},
+            {"name": "Custom Bedroom Sewing Workmanship", "desc": "Neat seam-matched tailoring"},
+        ],
+    ),
+    ServiceCategory(
+        id="interior_decor_blinds",
+        number=3,
+        title="Interior Decor, Window Blinds & Lighting",
+        summary="Modern window blinds, wall framing, chandeliers, mirrors, and indoor plants.",
+        icon="gem",
+        image="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "Custom Window Blinds (Roller, Zebra, Venetian)", "desc": "Kitchen, bathroom & office window fittings"},
+            {"name": "Decorative Wall Art Framing Sets", "desc": "Gallery-grade framed wall accents"},
+            {"name": "Chandeliers & Statement Lighting", "desc": "Living room & dining ambient fixtures"},
+            {"name": "Indoor Potted Decorative Plants", "desc": "Lifelike botanical greenery & planters"},
+            {"name": "Decorative Wall Accent Mirrors", "desc": "Light-expanding gold and wooden mirrors"},
+            {"name": "Welcome Doormats & Room Accent Rugs", "desc": "Anti-slip plush entrance and bedside mats"},
+        ],
+    ),
+    ServiceCategory(
+        id="bedroom_bedding",
+        number=4,
+        title="Bedroom & Luxury Bedding Furnishing",
+        summary="High-density mattresses, 400-thread count bedsheets, luxury duvets, and pillows.",
+        icon="stars",
+        image="https://images.unsplash.com/photo-1464890100898-a385f744067f?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "High-Density Mattresses (6x6 King / 4x6 Double)", "desc": "Orthopedic & luxury support mattress cores"},
+            {"name": "Cotton Bedsheet Bundles (6x6 & 4x6)", "desc": "Crisp hotel sheets with matching pillowcases"},
+            {"name": "Luxury White Duvet Sets", "desc": "400TC boutique-grade down alternative duvets"},
+            {"name": "Patterned & Textured Duvet Sets", "desc": "Designer jacquard and geometric duvet wraps"},
+            {"name": "Standard Comfort Fiber Pillows", "desc": "High-resilience soft fiber sleeping pillows"},
+        ],
+    ),
+    ServiceCategory(
+        id="kitchenware_utensils",
+        number=5,
+        title="Kitchenware & Turnkey Apartment Utensils",
+        summary="Complete kitchen setups for luxury homes, shortlet apartments, and hospitality suites.",
+        icon="cup-hot",
+        image="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "Premium Non-Stick Cookware Pot Sets", "desc": "Multi-piece granite & Teflon non-stick pans"},
+            {"name": "Kitchen Burner Stoves & Appliances", "desc": "Gas & electric countertop burner units"},
+            {"name": "Complete Cutlery Spoon & Fork Sets", "desc": "Stainless steel mirror-finish cutlery"},
+            {"name": "Complete Dinnerware Plate Sets & Glassware", "desc": "Ceramic plate sets, wine & water glasses"},
+            {"name": "Chef Knife Sets & Kitchen Utensils", "desc": "Food prep knives, spatulas & ladles"},
+            {"name": "Water Dispensers & Water Heaters", "desc": "Appliance installation & setup"},
+            {"name": "Dish Drying Racks, Waste Bins & Floor Mats", "desc": "Kitchen organization and safety fittings"},
+        ],
+    ),
+    ServiceCategory(
+        id="logistics_workmanship",
+        number=6,
+        title="Logistics, Measurement & Installation Labor",
+        summary="On-site window measurement verification, nationwide delivery, and master installation.",
+        icon="tools",
+        image="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80",
+        items=[
+            {"name": "On-Site Window & Room Measurement", "desc": "Precision laser and tape dimension audit"},
+            {"name": "Transportation & Nationwide Logistics", "desc": "Secure transit across Kwara & Nigeria"},
+            {"name": "Professional Assembly, Fitting & Mounting", "desc": "Dust-free wall drilling and drapery hanging"},
+        ],
+    ),
+]
+
 SOCIALS = [
     {
         "label": "Instagram",
@@ -244,6 +352,53 @@ SOCIALS = [
         "handle": "@sj_interior5",
         "href": "https://www.tiktok.com/@sj_interior5?_r=1&_t=ZS-94oz6j5vErV",
         "icon": "tiktok",
+    },
+]
+
+
+TESTIMONIALS = [
+    {
+        "name": "Dr. Halima Ibrahim",
+        "location": "GRA, Ilorin",
+        "role": "Homeowner",
+        "rating": 5,
+        "review": "SJ Interiors transformed our 4-bedroom duplex with custom pleated blackout curtains and hotel-white bedding bundles. The quality and neat finishing exceeded our expectations!",
+        "item": "Blackout Curtains & Hotel Bedding",
+    },
+    {
+        "name": "Tunde Bakare",
+        "location": "Tanke, Ilorin",
+        "role": "Shortlet Apartment Host",
+        "rating": 5,
+        "review": "I order all bedsheets, duvets, and window blinds for my Airbnb apartments from SJ Interiors. Guests constantly compliment the comfort and crisp luxury feel.",
+        "item": "Wholesale Bedsheet & Duvet Supply",
+    },
+    {
+        "name": "Amina Olatunji",
+        "location": "Fate Road, Ilorin",
+        "role": "Interior Styling Client",
+        "rating": 5,
+        "review": "Super responsive on WhatsApp! They helped me pick the right curtain fabrics and throw pillow combinations to match my living room sofa. 10/10 recommend.",
+        "item": "Curtains & Velvet Throw Pillows",
+    },
+]
+
+TRANSFORMATIONS = [
+    {
+        "title": "Living Room Window Elevation",
+        "category": "Curtains & Blinds",
+        "before_desc": "Bare window with harsh afternoon glare and no softness.",
+        "after_desc": "Layered soft sheer drapes with pleated blackout curtains that soften sunlight and create warmth.",
+        "image": "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
+        "tag": "Window Styling",
+    },
+    {
+        "title": "Hotel-Grade Master Bed Dressing",
+        "category": "Bedding & Linen",
+        "before_desc": "Plain mattress with unmatched sheets and flat pillows.",
+        "after_desc": "Crisp 400-thread count duvet, plush pillow trio, and textured throw accents for a boutique suite aesthetic.",
+        "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+        "tag": "Bedding Makeover",
     },
 ]
 
@@ -261,3 +416,4 @@ def products_for_category(category_slug: str | None) -> list[Product]:
     if not category_slug or category_slug == "all":
         return PRODUCTS
     return [product for product in PRODUCTS if product.category == category_slug]
+

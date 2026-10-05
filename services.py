@@ -29,6 +29,16 @@ except ImportError:
     )
     from supabase_client import get_public_client, has_supabase
 
+try:
+    from cachetools import TTLCache, cached
+    _brand_config_cache = TTLCache(maxsize=1, ttl=300)
+except ImportError:
+    def cached(cache):
+        def decorator(fn):
+            return fn
+        return decorator
+    _brand_config_cache = {}
+
 logger = logging.getLogger(__name__)
 
 
@@ -41,7 +51,7 @@ def _value(item: Any, key: str, fallback: Any = None) -> Any:
 def _normalize_rows(rows: list[Any]) -> list[dict[str, Any]]:
     if rows is None:
         return []
-    return [row if isinstance(row, dict) else dict(row)]
+    return [row if isinstance(row, dict) else dict(row) for row in rows]
 
 
 def _fetch_table(table: str, transform: Any | None = None) -> list[Any]:
@@ -65,7 +75,7 @@ def _fetch_table(table: str, transform: Any | None = None) -> list[Any]:
     return data
 
 
-@lru_cache(maxsize=1)
+@cached(cache=_brand_config_cache)
 def get_brand_config() -> dict[str, Any]:
     fallback = {
         "business_name": content.BUSINESS_NAME,
@@ -77,6 +87,8 @@ def get_brand_config() -> dict[str, Any]:
         "socials": SOCIALS,
         "value_points": VALUE_POINTS,
         "wholesale_benefits": WHOLESALE_BENEFITS,
+        "testimonials": content.TESTIMONIALS,
+        "transformations": content.TRANSFORMATIONS,
         "whatsapp_number": content.WHATSAPP_NUMBER,
         "phone_numbers": content.PHONE_NUMBERS,
         "address": content.ADDRESS,
@@ -96,6 +108,99 @@ def get_brand_config() -> dict[str, Any]:
             continue
         config[key] = row.get("value", config.get(key))
     return config
+
+
+def get_testimonials() -> list[dict[str, Any]]:
+    """Return dynamic testimonials from approved client_feedback, brand_config, or fallback."""
+    live_reviews = []
+    if has_supabase():
+        try:
+            client = get_service_client()
+            if client:
+                res = client.table("client_feedback").select("*").eq("kind", "review").eq("is_published", True).order("created_at", desc=True).execute()
+                rows = getattr(res, "data", [])
+                for r in rows:
+                    live_reviews.append({
+                        "name": r.get("customer_name") or "Valued Client",
+                        "role": f"{r.get('location_tag', 'Ilorin')} · {r.get('project_category', 'Interior Furnishing')}",
+                        "text": r.get("message", ""),
+                    })
+        except Exception:
+            pass
+
+    if live_reviews:
+        return live_reviews
+
+    cfg = get_brand_config()
+    return cfg.get("testimonials") or content.TESTIMONIALS
+
+
+def insert_client_feedback(data: dict[str, Any]) -> dict[str, Any]:
+    """Record customer review or service complaint from public storefront."""
+    import uuid, time
+    fb_id = f"fb-2026-{uuid.uuid4().hex[:6]}"
+    now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    kind = str(data.get("kind") or "review").lower()
+    is_rev = kind == "review"
+
+    entry = {
+        "id": fb_id,
+        "created_at": now_iso,
+        "kind": kind,
+        "customer_name": str(data.get("customer_name") or "Valued Client").strip(),
+        "customer_phone": str(data.get("customer_phone") or "").strip(),
+        "customer_email": str(data.get("customer_email") or "").strip(),
+        "rating": int(data.get("rating") or 5) if is_rev else 0,
+        "project_category": str(data.get("project_category") or "General Interior Furnishing").strip(),
+        "location_tag": str(data.get("location_tag") or "Ilorin, Kwara State").strip(),
+        "message": str(data.get("message") or "").strip(),
+        "order_ref": str(data.get("order_ref") or "").strip(),
+        "complaint_type": str(data.get("complaint_type") or ("Review" if is_rev else "General Inquiry")).strip(),
+        "urgency": str(data.get("urgency") or "normal").strip(),
+        "status": "pending" if is_rev else "open",
+        "is_published": False,
+        "assigned_to": "",
+        "resolution_notes": "",
+        "resolved_at": "",
+    }
+
+    if has_supabase():
+        try:
+            client = get_service_client()
+            if client:
+                client.table("client_feedback").insert(entry).execute()
+        except Exception:
+            pass
+
+    return entry
+
+
+def get_transformations() -> list[dict[str, Any]]:
+    """Return dynamic before/after transformations from brand_config or fallback."""
+    cfg = get_brand_config()
+    return cfg.get("transformations") or content.TRANSFORMATIONS
+
+
+def get_lookbook_items() -> list[dict[str, Any]]:
+    """Return dynamic lookbook items or fallback."""
+    cfg = get_brand_config()
+    return cfg.get("lookbook_items") or [
+        {"image": slide.image, "alt": slide.alt} for slide in HERO_SLIDES
+    ]
+
+
+def get_whatsapp_number() -> str:
+    """Return active WhatsApp number from brand_config, env, or fallback."""
+    try:
+        cfg = get_brand_config()
+        num = str(cfg.get("whatsapp_number") or "").strip()
+        if num:
+            return num.replace("+", "").replace(" ", "").replace("-", "")
+    except Exception:
+        pass
+    import os
+    return os.getenv("WHATSAPP_NUMBER", content.WHATSAPP_NUMBER).replace("+", "").replace(" ", "").replace("-", "")
+
 
 
 def get_categories() -> list[Any]:
@@ -177,3 +282,118 @@ def get_category_label(category_slug: str, categories: list[Any] | None = None) 
 
 def get_category_slugs() -> list[str]:
     return [_value(category, "slug") for category in get_categories() if _value(category, "slug")]
+
+
+def get_service_by_slug(slug: str) -> dict[str, Any] | None:
+    """Return a single service by its slug."""
+    services = get_services()
+    for svc in services:
+        if _value(svc, "slug") == slug:
+            return svc
+    return None
+
+
+def get_product_by_slug(slug: str) -> Any | None:
+    """Return a single product by its slug."""
+    products = get_products()
+    for prod in products:
+        if _value(prod, "slug") == slug:
+            return prod
+    return None
+
+
+def insert_inquiry(
+    customer_name: str,
+    phone: str,
+    email: str,
+    message: str,
+    source: str = "contact_form",
+    product_id: str | None = None,
+    selected_services: list[str] | None = None,
+    service_inquiry: bool = False,
+) -> dict[str, Any] | None:
+    """Insert a customer inquiry into Supabase. Returns the inserted row or None."""
+    from supabase_client import get_service_client, has_service_key
+
+    if not has_service_key():
+        logger.warning("No service key configured — inquiry not persisted")
+        return None
+
+    client = get_service_client()
+    if not client:
+        return None
+
+    data = {
+        "customer_name": customer_name,
+        "phone": phone,
+        "email": email,
+        "message": message,
+        "source": source,
+        "status": "new",
+        "service_inquiry": service_inquiry,
+    }
+    if product_id:
+        data["product_id"] = product_id
+    if selected_services:
+        data["selected_services"] = selected_services
+
+    try:
+        result = client.table("inquiries").insert(data).execute()
+        rows = getattr(result, "data", [])
+        return rows[0] if rows else None
+    except Exception as exc:
+        logger.warning("Failed to insert inquiry: %s", exc)
+        return None
+
+
+def insert_whatsapp_click(product_id: str | None = None) -> None:
+    """Log a WhatsApp button click as an inquiry."""
+    from supabase_client import get_service_client, has_service_key
+
+    if not has_service_key():
+        return
+
+    client = get_service_client()
+    if not client:
+        return
+
+    data = {
+        "customer_name": "Anonymous",
+        "phone": "",
+        "email": "",
+        "message": "WhatsApp button clicked",
+        "source": "whatsapp",
+        "status": "new",
+    }
+    if product_id:
+        data["product_id"] = product_id
+
+    try:
+        client.table("inquiries").insert(data).execute()
+    except Exception as exc:
+        logger.warning("Failed to log WhatsApp click: %s", exc)
+
+
+def get_order_by_number(order_number: str) -> dict[str, Any] | None:
+    """Look up an order by its order number (e.g. SJ-2026-0001)."""
+    from supabase_client import get_public_client, has_supabase
+
+    if not has_supabase():
+        return None
+
+    client = get_public_client()
+    if not client:
+        return None
+
+    try:
+        result = client.table("orders").select("*").eq("order_number", order_number).execute()
+        rows = getattr(result, "data", [])
+        return rows[0] if rows else None
+    except Exception as exc:
+        logger.warning("Failed to fetch order %s: %s", order_number, exc)
+        return None
+
+
+def clear_brand_config_cache() -> None:
+    """Invalidate the brand_config cache so fresh data is fetched next call."""
+    _brand_config_cache.clear()

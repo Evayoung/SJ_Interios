@@ -1,0 +1,1 @@
+﻿components.py:995: toast.innerHTML = 'Γ£¿ Added <strong>' + item.name + '</strong> to WhatsApp Bag!';

@@ -607,6 +607,329 @@ body {
   font-weight: 700;
 }
 
+/* ──────────────────────────────────────────────
+   Service cards
+   ────────────────────────────────────────────── */
+.service-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--brand-shadow-soft);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 80px rgba(61, 35, 116, 0.14);
+}
+
+.service-icon {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(110, 69, 201, 0.12);
+  color: var(--brand-purple);
+  margin-bottom: 0.75rem;
+}
+
+.service-title {
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+}
+
+.service-summary {
+  color: var(--brand-grey-deep);
+  font-weight: 500;
+}
+
+.service-description {
+  color: var(--brand-grey-deep);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.service-card .card-img-top {
+  height: 16rem;
+  object-fit: cover;
+}
+
+.service-btn {
+  background: linear-gradient(135deg, #20bb5c, #159347);
+  color: var(--brand-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: auto;
+}
+
+.service-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(21, 147, 71, 0.3);
+  color: var(--brand-white);
+}
+
+/* ──────────────────────────────────────────────
+   How it works / Process steps
+   ────────────────────────────────────────────── */
+.step-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--brand-shadow-soft);
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--brand-purple);
+  color: var(--brand-white);
+  margin-bottom: 1rem;
+}
+
+.step-number {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.step-title {
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  color: var(--brand-grey-deep);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ──────────────────────────────────────────────
+   Forms
+   ────────────────────────────────────────────── */
+.service-inquiry-form .form-check {
+  padding: 0.5rem 0;
+}
+
+.service-inquiry-form .form-check-input:checked {
+  background-color: var(--brand-purple);
+  border-color: var(--brand-purple);
+}
+
+.contact-form .form-control:focus,
+.service-inquiry-form .form-control:focus {
+  border-color: var(--brand-purple);
+  box-shadow: 0 0 0 0.2rem rgba(110, 69, 201, 0.15);
+}
+
+/* ──────────────────────────────────────────────
+   Empty states
+   ────────────────────────────────────────────── */
+.empty-state-title {
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+}
+
+.empty-state-message {
+  color: var(--brand-grey-deep);
+  max-width: 28rem;
+  margin: 0.75rem auto;
+}
+
+/* ──────────────────────────────────────────────
+   Order timeline
+   ────────────────────────────────────────────── */
+.order-timeline {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.timeline-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 1.5rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--brand-grey);
+}
+
+.timeline-item:first-child::before {
+  left: 50%;
+}
+
+.timeline-item:last-child::before {
+  right: 50%;
+}
+
+.timeline-dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--brand-grey);
+  border: 2px solid var(--brand-white);
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-item.completed .timeline-dot {
+  background: var(--brand-purple);
+}
+
+.timeline-item.pending .timeline-dot {
+  background: var(--brand-grey);
+}
+
+.timeline-item.cancelled .timeline-dot {
+  background: #dc3545;
+}
+
+.timeline-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  color: var(--brand-grey-deep);
+}
+
+.timeline-item.completed .timeline-label {
+  color: var(--brand-purple);
+}
+
+/* ──────────────────────────────────────────────
+   Accessibility
+   ────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: var(--brand-purple);
+  color: var(--brand-white);
+  z-index: 9999;
+}
+
+/* ──────────────────────────────────────────────
+   Dark mode
+   ────────────────────────────────────────────── */
+[data-bs-theme="dark"] {
+  --brand-purple: #8b6ce0;
+  --brand-purple-deep: #f1ebfb;
+  --brand-purple-soft: #2a1d45;
+  --brand-white: #1a1128;
+  --brand-grey: #2a1d45;
+  --brand-grey-deep: #b9aed4;
+}
+
+[data-bs-theme="dark"] body {
+  background: linear-gradient(180deg, #1a1128 0%, #120b1e 52%, #0d0815 100%);
+  color: #e8e0f5;
+}
+
+[data-bs-theme="dark"] .site-nav {
+  background: rgba(26, 17, 40, 0.95);
+  border-bottom-color: rgba(139, 108, 224, 0.15);
+}
+
+[data-bs-theme="dark"] .hero-side-card {
+  background: rgba(26, 17, 40, 0.92);
+}
+
+[data-bs-theme="dark"] .hero-outline-btn {
+  color: var(--brand-purple-deep) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+}
+
+[data-bs-theme="dark"] .content-section-soft {
+  background: linear-gradient(180deg, rgba(42, 29, 69, 0.55), rgba(26, 17, 40, 0.9));
+}
+
+[data-bs-theme="dark"] .category-card .card-body {
+  background: linear-gradient(180deg, rgba(26, 17, 40, 0.24), rgba(26, 17, 40, 0.95) 28%);
+}
+
+[data-bs-theme="dark"] .filter-pill {
+  background: var(--brand-white);
+  border-color: rgba(139, 108, 224, 0.2);
+  color: var(--brand-purple-deep);
+}
+
+[data-bs-theme="dark"] .filter-pill:hover,
+[data-bs-theme="dark"] .filter-pill.is-active {
+  background: var(--brand-purple);
+  color: var(--brand-white);
+}
+
+[data-bs-theme="dark"] .site-footer {
+  background: #0d0815;
+}
+
+[data-bs-theme="dark"] .form-control {
+  background-color: #2a1d45;
+  border-color: rgba(139, 108, 224, 0.2);
+  color: #e8e0f5;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  background-color: #342450;
+}
+
+/* ──────────────────────────────────────────────
+   Theme toggle
+   ────────────────────────────────────────────── */
+.theme-toggle {
+  background: none;
+  border: 1px solid rgba(110, 69, 201, 0.2);
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--brand-purple);
+}
+
+.theme-toggle:hover {
+  background: rgba(110, 69, 201, 0.1);
+}
+
 @media (max-width: 991.98px) {
   .hero-shell {
     margin: 0;
@@ -716,3 +1039,43 @@ body {
     padding: 0.9rem 1rem;
   }
 }
+
+/* ── Mobile-First Responsive Action Bar & Button Stacking ── */
+@media (max-width: 576px) {
+  .product-card .d-flex.gap-2 {
+    width: 100% !important;
+  }
+  .product-card .btn {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  .service-card .btn {
+    width: 100% !important;
+  }
+  .btn-group {
+    flex-wrap: wrap !important;
+  }
+}
+
+.product-quickview-btn {
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  padding: 0.35rem 0.75rem !important;
+}
+
+.product-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08) !important;
+}
+
+.shadow-xs {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
